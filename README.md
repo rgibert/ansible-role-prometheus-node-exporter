@@ -4,7 +4,7 @@ Installs Prometheus's node_exporter
 
 ## Requirements
 
-- TODO
+- none
 
 ## Role Variables
 

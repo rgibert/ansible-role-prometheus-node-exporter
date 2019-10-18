@@ -1,0 +1,11 @@
+[Unit]
+Description=prometheus_node_exporter
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}/node_exporter
+ExecStop=/usr/bin/ps auwwx | grep /usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}/node_exporter | grep -v grep | awk '{print $2}' | xargs kill -9
+
+[Install]
+WantedBy=multi-user.target

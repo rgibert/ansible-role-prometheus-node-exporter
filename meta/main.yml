@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  role_name: prometheus_node_exporter
+  author: Richard Gibert
+  company: Gibert.ca
+  description: Installs Prometheus's node_exporter
+  license: GPLv3
+  min_ansible_version: 1.2
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Ubuntu
+      versions:
+        - artful
+        - bionic
+        - cosmic
+        - trusty
+        - xenial
+  galaxy_tags:
+    - prometheus
+    - node_exporter
+dependencies: []

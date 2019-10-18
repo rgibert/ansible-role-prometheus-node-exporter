@@ -1,0 +1,52 @@
+---
+- block:
+
+    - name: load arch specific vars
+      include_vars: "{{ ansible_architecture }}.yml"
+
+    - name: create share dir
+      file:
+        state: directory
+        path: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
+        owner: root
+        group: root
+        mode: "u=rwX,g=rX,o=rX"
+
+    - name: download tarball
+      get_url:
+        url: "{{ prometheus_node_exporter_dl_url }}"
+        dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
+        checksum: "sha256:{{ prometheus_node_exporter_sha256_url }}"
+
+    - name: unpack tarball
+      unarchive:
+        src: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
+        dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
+        owner: root
+        group: root
+        mode: "u=rwX,g=rX,o=rX"
+      notify:
+        - restart prometheus_node_exporter
+      when:
+        - not ansible_check_mode
+
+    - name: copy service file
+      template:
+        src: etc/systemd/system/prometheus_node_exporter.service.j2
+        dest: /etc/systemd/system/prometheus_node_exporter.service
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify:
+        - restart prometheus_node_exporter
+
+    - name: enable and start service
+      systemd:
+        name: prometheus_node_exporter
+        state: started
+        enabled: true
+
+  become: true
+  become_user: root
+  tags:
+    - prometheus_node_exporter

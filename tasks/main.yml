@@ -22,6 +22,7 @@
       unarchive:
         src: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
         dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
+        remote_src: true
         owner: "{{ prometheus_node_exporter_user }}"
         group: "{{ prometheus_node_exporter_group }}"
         mode: "u=rwX,g=rX,o=rX"

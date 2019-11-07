@@ -4,8 +4,11 @@ After=network.target
 
 [Service]
 Type=simple
+User={{ prometheus_node_exporter_user }}
+Group={{ prometheus_node_exporter_group }}
 ExecStart=/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}/node_exporter
 ExecStop=/usr/bin/ps auwwx | grep /usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}/node_exporter | grep -v grep | awk '{print $2}' | xargs kill -9
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

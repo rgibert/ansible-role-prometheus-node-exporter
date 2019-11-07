@@ -9,8 +9,8 @@ lint:
     config-data:
       line-length: disable
 platforms:
-  - name: test_platform
-    image: ${MOLECULE_DISTRO:-ubuntu:cosmic}
+  - name: instance
+    image: ${MOLECULE_DISTRO:-ubuntu:eoan}
 provisioner:
   name: ansible
   lint:

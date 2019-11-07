@@ -27,6 +27,8 @@
         mode: "u=rwX,g=rX,o=rX"
       notify:
         - restart prometheus_node_exporter
+      tags:
+        - skip_ansible_lint
       when:
         - not ansible_check_mode
 

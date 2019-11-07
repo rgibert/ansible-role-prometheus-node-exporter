@@ -12,6 +12,7 @@ def test_bin_file(host):
         "/node_exporter-0.18.1.linux-amd64/node_exporter"
     ).exists
 
+
 def test_service_file(host):
     assert host.file(
         "/etc/systemd/system/prometheus_node_exporter.service"

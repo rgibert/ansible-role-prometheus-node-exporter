@@ -22,7 +22,7 @@ galaxy_info:
         - xenial
   galaxy_tags:
     - prometheus
-    - node_exporter
+    - nodeexporter
 dependencies:
   - role: rgibert.user_setup
     user_setup_group: "{{ prometheus_node_exporter_user }}"

@@ -4,7 +4,7 @@
     - name: load arch specific vars
       include_vars: "{{ ansible_architecture }}.yml"
 
-    - name: create share dir
+    - name: create share path
       file:
         state: directory
         path: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
@@ -32,6 +32,15 @@
         - skip_ansible_lint
       when:
         - not ansible_check_mode
+
+    - name: create systemd path
+      file:
+        state: directory
+        path: /etc/systemd/system
+        owner: root
+        group: root
+        recurse: true
+        mode: "u=rwX,g=rX,o=rX"
 
     - name: copy service file
       template:

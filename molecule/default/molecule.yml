@@ -10,7 +10,13 @@ lint:
       line-length: disable
 platforms:
   - name: instance
-    image: ${MOLECULE_DISTRO:-ubuntu:eoan}
+    image: ${MOLECULE_DISTRO:-centos:7}
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
   lint:

@@ -3,3 +3,5 @@ prometheus_node_exporter_version: 0.18.1
 prometheus_node_exporter_base_url: "https://github.com/prometheus/node_exporter/releases/download"
 prometheus_node_exporter_dl_url: "{{ prometheus_node_exporter_base_url }}/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
 prometheus_node_exporter_sha256_url: "{{ prometheus_node_exporter_base_url }}/v{{ prometheus_node_exporter_version }}/sha256sums.txt"
+prometheus_node_exporter_user: prometheus
+prometheus_node_exporter_group: prometheus

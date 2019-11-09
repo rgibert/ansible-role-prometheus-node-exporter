@@ -4,12 +4,12 @@
     - name: load arch specific vars
       include_vars: "{{ ansible_architecture }}.yml"
 
-    - name: create share dir
+    - name: create share path
       file:
         state: directory
         path: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
-        owner: root
-        group: root
+        owner: "{{ prometheus_node_exporter_user }}"
+        group: "{{ prometheus_node_exporter_group }}"
         mode: "u=rwX,g=rX,o=rX"
 
     - name: download tarball
@@ -22,13 +22,25 @@
       unarchive:
         src: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
         dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
-        owner: root
-        group: root
+        remote_src: true
+        owner: "{{ prometheus_node_exporter_user }}"
+        group: "{{ prometheus_node_exporter_group }}"
         mode: "u=rwX,g=rX,o=rX"
       notify:
         - restart prometheus_node_exporter
+      tags:
+        - skip_ansible_lint
       when:
         - not ansible_check_mode
+
+    - name: create systemd path
+      file:
+        state: directory
+        path: /etc/systemd/system
+        owner: root
+        group: root
+        recurse: true
+        mode: "u=rwX,g=rX,o=rX"
 
     - name: copy service file
       template:

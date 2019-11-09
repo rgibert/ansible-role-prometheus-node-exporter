@@ -11,14 +11,22 @@ galaxy_info:
       versions:
         - 6
         - 7
+        - 8
     - name: Ubuntu
       versions:
-        - artful
         - bionic
-        - cosmic
+        - disco
+        - eoan
         - trusty
         - xenial
   galaxy_tags:
     - prometheus
-    - node_exporter
-dependencies: []
+    - nodeexporter
+dependencies:
+  - role: rgibert.user_setup
+    user_setup_group: "{{ prometheus_node_exporter_user }}"
+    user_setup_username: "{{ prometheus_node_exporter_group }}"
+    user_setup_shell: /sbin/nologin
+    tags: prometheus_node_exporter
+    become: true
+    become_user: root

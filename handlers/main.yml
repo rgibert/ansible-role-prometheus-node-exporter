@@ -1,5 +1,0 @@
----
-- name: restart prometheus_node_exporter
-  systemd:
-    name: prometheus_node_exporter
-    state: restarted

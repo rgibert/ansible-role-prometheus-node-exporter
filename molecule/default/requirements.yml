@@ -1,2 +1,3 @@
 ---
 - src: rgibert.user_setup
+- src: rgibert.single_binary_service

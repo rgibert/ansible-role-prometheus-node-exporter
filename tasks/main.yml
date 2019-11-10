@@ -1,64 +1,11 @@
 ---
 - block:
 
-    - name: load arch specific vars
+    - name: load arch vars
       include_vars: "{{ ansible_architecture }}.yml"
 
-    - name: create share path
-      file:
-        state: directory
-        path: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
-        owner: "{{ prometheus_node_exporter_user }}"
-        group: "{{ prometheus_node_exporter_group }}"
-        mode: "u=rwX,g=rX,o=rX"
+    - include_role:
+        name: rgibert.single_binary_service
 
-    - name: download tarball
-      get_url:
-        url: "{{ prometheus_node_exporter_dl_url }}"
-        dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
-        checksum: "sha256:{{ prometheus_node_exporter_sha256_url }}"
-
-    - name: unpack tarball
-      unarchive:
-        src: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-        dest: "/usr/local/share/prometheus_node_exporter-{{ prometheus_node_exporter_version }}"
-        remote_src: true
-        owner: "{{ prometheus_node_exporter_user }}"
-        group: "{{ prometheus_node_exporter_group }}"
-        mode: "u=rwX,g=rX,o=rX"
-      notify:
-        - restart prometheus_node_exporter
-      tags:
-        - skip_ansible_lint
-      when:
-        - not ansible_check_mode
-
-    - name: create systemd path
-      file:
-        state: directory
-        path: /etc/systemd/system
-        owner: root
-        group: root
-        recurse: true
-        mode: "u=rwX,g=rX,o=rX"
-
-    - name: copy service file
-      template:
-        src: etc/systemd/system/prometheus_node_exporter.service.j2
-        dest: /etc/systemd/system/prometheus_node_exporter.service
-        owner: root
-        group: root
-        mode: "u=rw,g=r,o=r"
-      notify:
-        - restart prometheus_node_exporter
-
-    - name: enable and start service
-      systemd:
-        name: prometheus_node_exporter
-        state: started
-        enabled: true
-
-  become: true
-  become_user: root
   tags:
     - prometheus_node_exporter

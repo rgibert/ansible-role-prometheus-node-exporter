@@ -21,4 +21,14 @@ galaxy_info:
     - prometheus
     - nodeexporter
     - prometheusnodeexporter
-dependencies: []
+dependencies:
+  - role: rgibert.single_binary_service
+    version: 1.1.2
+    prometheus_node_exporter_arch: amd64
+    when:
+      - ansible_architecture == 'x86_64'
+  - role: rgibert.single_binary_service
+    version: 1.1.2
+    prometheus_node_exporter_arch: 386
+    when:
+      - ansible_architecture == 'x86'

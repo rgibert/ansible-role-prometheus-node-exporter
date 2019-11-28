@@ -11,21 +11,18 @@ Installs Prometheus's node_exporter
 
 ## Requirements
 
-- rgibert.single_binary_service role in roles path
+- RHEL or Debian
 
 ## Role Variables
 
 | Variable | Description |
 |----------|-------------|
 | prometheus_node_exporter_base_url | Base URL for other variables |
-| single_binary_service_checksum | SHA256 URL for tarball |
-| single_binary_service_dl_url | Tarball download URL |
-| single_binary_service_group | Default group for the user to run as |
-| single_binary_service_name | Service name |
-| single_binary_service_start_cmd | Start command used by service file |
-| single_binary_service_stop_cmd | Stop command used by service file |
-| single_binary_service_user | User to run the exporter as |
-| single_binary_service_version | Version to install |
+| prometheus_node_exporter_checksum | SHA256 URL for tarball |
+| prometheus_node_exporter_dl_url | Tarball download URL |
+| prometheus_node_exporter_group | Default group for the user to run as |
+| prometheus_node_exporter_user | User to run the exporter as |
+| prometheus_node_exporter_version | Version to install |
 
 ## Dependencies
 

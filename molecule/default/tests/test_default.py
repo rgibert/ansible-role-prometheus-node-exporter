@@ -8,20 +8,20 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_bin_file(host):
     assert host.file(
-        "/usr/local/share/prometheus_node_exporter-0.18.1"
-        "/node_exporter-0.18.1.linux-amd64/node_exporter"
+        "/usr/local/share/prometheus_blackbox_exporter-0.16.0"
+        "/blackbox_exporter-0.16.0.linux-amd64/blackbox_exporter"
     ).exists
 
 
 def test_service_file(host):
     assert host.file(
-        "/etc/systemd/system/prometheus_node_exporter.service"
+        "/etc/systemd/system/prometheus_blackbox_exporter.service"
     ).exists
 
 
 def test_service_enabled(host):
-    assert host.service('prometheus_node_exporter').is_enabled
+    assert host.service('prometheus_blackbox_exporter').is_enabled
 
 
 def test_service_running(host):
-    assert host.service('prometheus_node_exporter').is_running
+    assert host.service('prometheus_blackbox_exporter').is_running

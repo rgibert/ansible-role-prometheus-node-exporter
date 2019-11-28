@@ -1,7 +1,82 @@
 ---
-prometheus_node_exporter_base_url: "https://github.com/prometheus/node_exporter/releases/download"
-prometheus_node_exporter_dl_url: "{{ prometheus_node_exporter_base_url }}/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-{{ prometheus_node_exporter_arch }}.tar.gz"
-prometheus_node_exporter_checksum: "sha256:{{ prometheus_node_exporter_base_url }}/v{{ prometheus_node_exporter_version }}/sha256sums.txt"
-prometheus_node_exporter_version: "0.18.1"
-prometheus_node_exporter_user: "prometheus"
-prometheus_node_exporter_group: "prometheus"
+prometheus_blackbox_exporter_base_url: "https://github.com/prometheus/blackbox_exporter/releases/download"
+prometheus_blackbox_exporter_dl_url: "{{ prometheus_blackbox_exporter_base_url }}/v{{ prometheus_blackbox_exporter_version }}/blackbox_exporter-{{ prometheus_blackbox_exporter_version }}.linux-{{ prometheus_blackbox_exporter_arch }}.tar.gz"
+prometheus_blackbox_exporter_checksum: "sha256:{{ prometheus_blackbox_exporter_base_url }}/v{{ prometheus_blackbox_exporter_version }}/sha256sums.txt"
+prometheus_blackbox_exporter_version: "0.16.0"
+prometheus_blackbox_exporter_user: "prometheus"
+prometheus_blackbox_exporter_group: "prometheus"
+prometheus_blackbox_exporter_conf_path: /etc/prometheus
+prometheus_blackbox_exporter_port: "9102"
+prometheus_blackbox_exporter_conf_file: blackbox_exporter.yml
+prometheus_blackbox_exporter_config: |
+  modules:
+    http_get:
+      prober: http
+      timeout: 5s
+      http:
+        valid_status_codes:
+          - 200
+          - 201
+          - 202
+          - 203
+          - 204
+          - 205
+          - 206
+          - 207
+          - 208
+          - 226
+          - 300
+          - 301
+          - 302
+          - 303
+          - 304
+          - 305
+          - 306
+          - 307
+          - 308
+        method: GET
+        tls_config:
+          insecure_skip_verify: true
+    http_post:
+      prober: http
+      timeout: 5s
+      http:
+        valid_status_codes:
+          - 200
+          - 201
+          - 202
+          - 203
+          - 204
+          - 205
+          - 206
+          - 207
+          - 208
+          - 226
+          - 300
+          - 301
+          - 302
+          - 303
+          - 304
+          - 305
+          - 306
+          - 307
+          - 308
+        method: POST
+        tls_config:
+          insecure_skip_verify: true
+    tcp_notls:
+      prober: tcp
+      timeout: 5s
+      tcp:
+        tls: false
+    tcp_tls:
+      prober: tcp
+      timeout: 5s
+      tcp:
+        tls: true
+    ssh:
+      prober: tcp
+      timeout: 5s
+      tcp:
+        query_response:
+        - expect: "^SSH-2.0-"

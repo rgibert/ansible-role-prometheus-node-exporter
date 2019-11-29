@@ -3,5 +3,5 @@
   hosts:
     - all
   roles:
-    - role: rgibert.prometheus_blackbox_exporter
-      prometheus_blackbox_exporter_version: 0.16.0
+    - role: rgibert.prometheus_node_exporter
+      prometheus_node_exporter_version: 0.18.1

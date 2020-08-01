@@ -11,12 +11,13 @@ Installs Prometheus's node_exporter
 
 ## Requirements
 
-- RHEL or Debian
+- ArchLinux, RHEL, or Debian
 
 ## Role Variables
 
 | Variable | Description |
 |----------|-------------|
+| prometheus_node_exporter_args | Additional arguments to provide to the binary |
 | prometheus_node_exporter_base_url | Base URL for other variables |
 | prometheus_node_exporter_checksum | SHA256 URL for tarball |
 | prometheus_node_exporter_dl_url | Tarball download URL |
@@ -26,7 +27,7 @@ Installs Prometheus's node_exporter
 
 ## Dependencies
 
-- none
+- rgibert.single_binary_service
 
 ## Example Playbook
 
@@ -35,7 +36,7 @@ Installs Prometheus's node_exporter
     - servers
   roles:
     - role: rgibert.prometheus_node_exporter
-      prometheus_node_exporter_version: 0.18.1
+      prometheus_node_exporter_version: 1.0.1
 ```
 
 ## License
